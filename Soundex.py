@@ -31,11 +31,11 @@ def generate_soundex(name):
     soundex = soundex.ljust(4, '0')
     return soundex
 # Test cases
-print(generate_soundex("Robert"))  # Output should be "R163"
-print(generate_soundex("Rupert"))  # Output should be "R163"
-print(generate_soundex("Rubin"))   # Output should be "R150"
-print(generate_soundex("Ashcraft")) # Output should be "A261"
-print(generate_soundex("Ashcroft")) # Output should be "A261"
+# print(generate_soundex("Robert"))  # Output should be "R163"
+# print(generate_soundex("Rupert"))  # Output should be "R163"
+# print(generate_soundex("Rubin"))   # Output should be "R150"
+# print(generate_soundex("Ashcraft")) # Output should be "A261"
+# print(generate_soundex("Ashcroft")) # Output should be "A261"
 # print(generate_soundex("Tymczak"))  # Output should be "T522"
 # print(generate_soundex("Pfister"))  # Output should be "P236"
 # print(generate_soundex("Honeyman"))  # Output should be "H555"
