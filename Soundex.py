@@ -12,13 +12,16 @@ def get_soundex_code(c):
     # Default to '0' for non-mapped characters
     return mapping.get(c.upper(), '0')
 
+
 def get_first_letter(name):
     """Returns the first letter of the name in uppercase."""
     return name[0].upper() if name else ""
 
+
 def is_relevant_code(code, prev_code):
         """Determine if the code should be included."""
         return code != '0' and code != prev_code
+
 
 def filter_and_map_soundex(name):
     """Returns a list of Soundex codes for the characters in the name,
@@ -32,15 +35,16 @@ def filter_and_map_soundex(name):
             prev_code = code
     return codes
 
+
 def pad_soundex(soundex):
     """Pads the Soundex code with zeros to ensure it is 4 characters long."""
     return soundex.ljust(4, '0')
+
 
 def generate_soundex(name):
     """Generates the Soundex code for a given name."""
     if not name:
         return ""
-
     first_letter = get_first_letter(name)
     soundex_body = ''.join(filter_and_map_soundex(name[1:]))[:3]  
     soundex = first_letter + soundex_body
