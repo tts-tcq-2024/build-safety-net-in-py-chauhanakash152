@@ -10,11 +10,15 @@ def get_soundex_code(c):
         'R': '6'
     }
     # Default to '0' for non-mapped characters
-    return mapping.get(c.upper(), '0')  
+    return mapping.get(c.upper(), '0')
 
 def get_first_letter(name):
     """Returns the first letter of the name in uppercase."""
     return name[0].upper() if name else ""
+
+def is_relevant_code(code, prev_code):
+        """Determine if the code should be included."""
+        return code != '0' and code != prev_code
 
 def filter_and_map_soundex(name):
     """Returns a list of Soundex codes for the characters in the name,
@@ -23,7 +27,7 @@ def filter_and_map_soundex(name):
     prev_code = ''
     for char in name:
         code = get_soundex_code(char)
-        if code != '0' and code != prev_code:
+        if is_relevant_code(code, prev_code):
             codes.append(code)
             prev_code = code
     return codes
@@ -38,9 +42,7 @@ def generate_soundex(name):
         return ""
 
     first_letter = get_first_letter(name)
-    # Take only the first 3 mapped codes
     soundex_body = ''.join(filter_and_map_soundex(name[1:]))[:3]  
     soundex = first_letter + soundex_body
 
     return pad_soundex(soundex)
-
