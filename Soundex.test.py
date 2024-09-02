@@ -22,7 +22,7 @@ class TestSoundex(unittest.TestCase):
         self.assertEqual(generate_soundex("John@Doe"), "J530")
 
     def test_name_with_various_letters(self):
-        self.assertEqual(generate_soundex("Cameron"), "C550")
+        self.assertEqual(generate_soundex("Cameron"), "C565")
         self.assertEqual(generate_soundex("Smith"), "S530")
         self.assertEqual(generate_soundex("Khan"), "K530")
 
