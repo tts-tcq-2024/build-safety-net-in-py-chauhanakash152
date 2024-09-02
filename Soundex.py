@@ -1,52 +1,50 @@
-def get_soundex_code(c):
+def get_soundex_code(char):
     """Returns the Soundex code for a single character."""
     mapping = {
         'B': '1', 'F': '1', 'P': '1', 'V': '1',
-        'C': '2', 'G': '2', 'J': '2', 'K': '2', 'Q': '2', 'S': '2',
-        'X': '2', 'Z': '2',
+        'C': '2', 'G': '2', 'J': '2', 'K': '2', 'Q': '2', 'S': '2', 'X': '2', 'Z': '2',
         'D': '3', 'T': '3',
         'L': '4',
         'M': '5', 'N': '5',
         'R': '6'
     }
-    # Default to '0' for non-mapped characters
-    return mapping.get(c.upper(), '0')
+    return mapping.get(char.upper(), '0')
 
+# def remove_irrelevant_chars(name):
+#     """Removes vowels and irrelevant characters from the name except the first letter."""
+#     return name[0].upper() + ''.join(
+#         [char for char in name[1:] if char.upper() not in "AEIOUYHW"]
+#     )
 
-def get_first_letter(name):
-    """Returns the first letter of the name in uppercase."""
-    return name[0].upper() if name else ""
-
-
-def is_relevant_code(code, prev_code):
-    """Determine if the code should be included."""
-    return code != '0' and code != prev_code
-
-
-def filter_and_map_soundex(name):
-    """Returns a list of Soundex codes for the characters in the name,
-    skipping repeated codes."""
-    codes = []
-    prev_code = ''
-    for char in name:
+def encode_name(name):
+    """Encodes the name into Soundex digits, collapsing adjacent same digits and handling separation by vowels."""
+    first_letter = name[0].upper()
+    encoded_digits = []
+    previous_code = get_soundex_code(first_letter)
+    
+    for char in name[1:]:
         code = get_soundex_code(char)
-        if is_relevant_code(code, prev_code):
-            codes.append(code)
-            prev_code = code
-    return codes
+        if code != '0' and (code != previous_code):
+            encoded_digits.append(code)
+        if len(encoded_digits) == 3:
+            break
 
-
-def pad_soundex(soundex):
-    """Pads the Soundex code with zeros to ensure it is 4 characters long."""
-    return soundex.ljust(4, '0')
-
+    return first_letter + ''.join(encoded_digits).ljust(3, '0')
 
 def generate_soundex(name):
     """Generates the Soundex code for a given name."""
     if not name:
         return ""
-    first_letter = get_first_letter(name)
-    soundex_body = ''.join(filter_and_map_soundex(name[1:]))[:3]
-    soundex = first_letter + soundex_body
+    
+    # cleaned_name = remove_irrelevant_chars(name)
+    return encode_name(name)
 
-    return pad_soundex(soundex)
+# Test cases
+print(generate_soundex("Robert"))  # Output should be "R163"
+print(generate_soundex("Rupert"))  # Output should be "R163"
+print(generate_soundex("Rubin"))   # Output should be "R150"
+print(generate_soundex("Ashcraft")) # Output should be "A261"
+print(generate_soundex("Ashcroft")) # Output should be "A261"
+print(generate_soundex("Tymczak"))  # Output should be "T522"
+print(generate_soundex("Pfister"))  # Output should be "P236"
+print(generate_soundex("Honeyman"))  # Output should be "H555"
