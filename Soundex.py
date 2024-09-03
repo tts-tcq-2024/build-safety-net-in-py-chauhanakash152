@@ -26,6 +26,7 @@ def generate_soundex_word(word):
         word_soundex += SOUNDEX_DIC.get(character.lower(), '0')
     return word_soundex
 
+
 def should_include_char(char, prev_char):
     """
     Determine if a character should be included in the formatted Soundex code.
