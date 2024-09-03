@@ -36,6 +36,7 @@ class TestSoundex(unittest.TestCase):
         """Test the case where the formatted Soundex code is
         exactly 4 characters long."""
         self.assertEqual(generate_soundex('Brock'), "B620")
-    
+
+ 
 if __name__ == '__main__':
     unittest.main()
