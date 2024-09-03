@@ -1,70 +1,77 @@
-SOUNDEX_MAPPING = {
-    "0": "aeiouyhw",
-    "1": "bfpv",
-    "2": "cgjkqsxz",
-    "3": "dt",
-    "4": "l",
-    "5": "mn",
-    "6": "r",
+SOUNDEX_DIC = {
+    'b': '1', 'f': '1', 'p': '1', 'v': '1',
+    'c': '2', 'g': '2', 'j': '2', 'k': '2',
+    'q': '2', 's': '2', 'x': '2', 'z': '2',
+    'd': '3', 't': '3', 'l': '4', 'm': '5',
+    'n': '5', 'r': '6'
 }
 
 
-def get_soundex_code(character):
+def generate_soundex_word(word):
     """
-    Retrieves the Soundex code for a given character.
+    Generate the Soundex code representation for a given word.
 
-    Args:
-        character (str): The character to map to a Soundex code.
+    This function maps each character in the word to its corresponding
+    Soundex digit using the SOUNDEX_DIC dictionary. Characters not found
+    in the dictionary are replaced with '0'.
+
+    Parameters:
+    word (str): The word to be encoded.
 
     Returns:
-        str or None: The corresponding Soundex code if the character is found, otherwise None.
+    str: A string of digits representing the Soundex encoding of the word.
     """
-    return next(
-        (code for code, chars in SOUNDEX_MAPPING.items() if character.lower() in chars),
-        None,
-    )
+    word_soundex = ''
+    for character in word:
+        word_soundex += SOUNDEX_DIC.get(character.lower(), '0')
+    return word_soundex
 
 
-def format_soundex_code(soundex_code, final_string, first_character_soundex):
+def formate_soundex_word(word_soundex):
     """
-    Determines if the Soundex code should be included in the final string.
+    Format the Soundex code by removing consecutive duplicate digits.
 
-    Args:
-        soundex_code (str): The Soundex code to evaluate.
-        final_string (str): The current accumulated Soundex string.
-        first_character_soundex (str): The Soundex code of the first character of the name.
+    This function removes consecutive duplicate digits from the Soundex
+    code, except for the first character. It also removes any '0' digits,
+    which represent characters not in the SOUNDEX_DIC dictionary.
+
+    Parameters:
+    word_soundex (str): The Soundex code to be formatted.
 
     Returns:
-        bool: True if the Soundex code should be included in the final string, False otherwise.
+    str: The formatted Soundex code without consecutive duplicates.
     """
-    return (
-        soundex_code
-        and not final_string.endswith(soundex_code)
-        and not (len(final_string) == 1 and soundex_code in first_character_soundex)
-    )
+    formatted_soundex = []
+    prev_char = word_soundex[0]  # Start with the first character
+
+    # Start from the second character since the first is retained as is
+    for char in word_soundex[1:]:
+        if char != prev_char and char != '0':
+            formatted_soundex.append(char)
+        prev_char = char
+
+    return ''.join(formatted_soundex)
 
 
-def generate_soundex(name):
+def generate_soundex(word):
     """
-    Generates the Soundex code for a given name.
+    Generate the complete Soundex code for a given word.
 
-    Args:
-        name (str): The name to generate a Soundex code for.
+    This function generates the full Soundex code, including retaining
+    the first letter of the word, formatting the subsequent Soundex
+    digits, and ensuring the code is four characters long by padding
+    with zeros if necessary.
+
+    Parameters:
+    word (str): The word to be encoded into Soundex.
 
     Returns:
-        str: A 4-character Soundex code string. If the name is empty, returns an empty string.
+    str: The Soundex code for the word, which is a letter followed by
+         three digits.
     """
-    if not name:
+    if not word:
         return ""
-
-    final_string = name[0].upper()
-    first_character_soundex = get_soundex_code(name[0])
-    soundex_codes = [get_soundex_code(character) for character in name[1:]]
-    final_string += "".join(
-        soundex_code
-        for soundex_code in soundex_codes
-        if format_soundex_code(soundex_code, final_string, first_character_soundex)
-    )
-
-    final_string = final_string.replace("0", "")
-    return final_string[:4].ljust(4, "0")
+    word_soundex = generate_soundex_word(word)
+    soundex_code = word[0].upper() + formate_soundex_word(word_soundex)
+    soundex_code = soundex_code[:4].ljust(4, '0')
+    return soundex_code
