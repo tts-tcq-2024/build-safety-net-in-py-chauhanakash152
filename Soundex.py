@@ -68,11 +68,3 @@ def generate_soundex(name):
 
     final_string = final_string.replace("0", "")
     return final_string.ljust(4, "0")
-
-
-print(generate_soundex("PFISTER"))  # returns P236
-print(generate_soundex("Akash"))  # returns A220
-print(generate_soundex("Aakaash"))  # returns A220
-print(generate_soundex("TYMCZAK"))  # returns T522
-print(generate_soundex("HONEYMAN"))  # returns H555
-print(generate_soundex("PFISTER"))  # returns P236
