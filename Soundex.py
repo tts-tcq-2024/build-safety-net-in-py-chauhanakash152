@@ -26,6 +26,22 @@ def generate_soundex_word(word):
         word_soundex += SOUNDEX_DIC.get(character.lower(), '0')
     return word_soundex
 
+def should_include_char(char, prev_char):
+    """
+    Determine if a character should be included in the formatted Soundex code.
+
+    This function checks if a character is different from the previous character
+    and is not '0'.
+
+    Parameters:
+    char (str): The current character to be checked.
+    prev_char (str): The previous character to compare against.
+
+    Returns:
+    bool: True if the character should be included, False otherwise.
+    """
+    return char != prev_char and char != '0'
+
 
 def formate_soundex_word(word_soundex):
     """
@@ -46,7 +62,7 @@ def formate_soundex_word(word_soundex):
 
     # Start from the second character since the first is retained as is
     for char in word_soundex[1:]:
-        if char != prev_char and char != '0':
+        if should_include_char(char, prev_char):
             formatted_soundex.append(char)
         prev_char = char
 
