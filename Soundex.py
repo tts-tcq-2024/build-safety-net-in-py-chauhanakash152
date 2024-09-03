@@ -67,4 +67,4 @@ def generate_soundex(name):
     )
 
     final_string = final_string.replace("0", "")
-    return final_string.ljust(4, "0")
+    return final_string[:4].ljust(4, "0")
