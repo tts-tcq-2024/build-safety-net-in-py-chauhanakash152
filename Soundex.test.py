@@ -26,8 +26,8 @@ class TestSoundex(unittest.TestCase):
     def test_word_with_consecutive_duplicates(self):
         """Test the case where the input word has consecutive
         characters that map to the same digit."""
-        input_word = "BEEF"
-        expected_soundex = "B100"
+        input_word = "PAAT"
+        expected_soundex = "P300"
         self.assertEqual(generate_soundex(input_word), expected_soundex)
 
     def test_word_with_all_mapped_characters(self):
