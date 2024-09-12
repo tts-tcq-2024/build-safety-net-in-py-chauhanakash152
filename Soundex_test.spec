@@ -38,8 +38,8 @@ This function converts a given word into its corresponding Soundex code based on
 
 ### 4. Test Case: Word with Consecutive Duplicate Mapped Characters
 - **Test Method**: `test_word_with_consecutive_duplicates`
-- **Input**: `"BEEF"`
-- **Expected Output**: `"B100"`
+- **Input**: `"PAAT"`
+- **Expected Output**: `"P300"`
 - **Description**:  
   This test ensures that consecutive characters that map to the same digit are collapsed into a single digit, following the Soundex rule. Here, 'E' and 'E' both map to `1`, but only one `1` should be kept.
 
