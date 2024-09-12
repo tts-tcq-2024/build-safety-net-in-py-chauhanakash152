@@ -41,7 +41,7 @@ This function converts a given word into its corresponding Soundex code based on
 - **Input**: `"PAAT"`
 - **Expected Output**: `"P300"`
 - **Description**:  
-  This test ensures that consecutive characters that map to the same digit are collapsed into a single digit, following the Soundex rule. Here, 'E' and 'E' both map to `1`, but only one `1` should be kept.
+  This test ensures that consecutive characters that map to the same digit are collapsed into a single digit, following the Soundex rule. Here, 'A' and 'A' both map to `0`, but only one `0` should be kept.
 
 ---
 
